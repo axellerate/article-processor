@@ -1,6 +1,7 @@
 import nltk, re
-from nltk.tokenize import PunktSentenceTokenizer
 from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import PunktSentenceTokenizer
 
 class ArticlePreprocessor:
 
@@ -22,9 +23,15 @@ class ArticlePreprocessor:
 		# convert to list to work with easier
 		list_of_words = self.article_to_list(article)
 		stop_words = set(stopwords.words('english'))
+		# lemmatize words (long processing)
+		# list_of_words = [self.lemmatize(word) for word in list_of_words]
 		output = [word for word in list_of_words if word not in stop_words]
 		# convert back to a string
 		return ' '.join(output)
+
+	def lemmatize(self,word):
+		wordnet_lemmatizer = WordNetLemmatizer()
+		return wordnet_lemmatizer.lemmatize(word)
 
 	def tag_words(self, article):
 		custom_sentence_tokenizer = PunktSentenceTokenizer(article)
@@ -38,7 +45,17 @@ class ArticlePreprocessor:
 			pass
 			# print(str(e))
 
-	def chuck_words(self):
-		chunk_gram = '''Chunk: {<JJ.?>*<NN.?>+<NNP>?}'''
+	def chuck_words(self,tagged_words):
+		'''
+		Examples:
+		climate(noun) change(verb)
+		global(adjective) warming(adjective)
+		sea(noun) ice(noun)
+		greenhouse(noun) gas(noun)
+		fossil(noun) fuels(noun)
+		carbon(noun) dioxide(noun)
+		'''
+		chunk_gram = '''Chunk: {<JJ.?><NN.?> | <NN.?><NN.?> | <JJ.?><JJ.?>}'''
 		chunkParser = nltk.RegexpParser(chunk_gram)
-		chunked = chunkParser.parse(tagged)
+		chunked = chunkParser.parse(tagged_words)
+		return chunked

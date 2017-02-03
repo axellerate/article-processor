@@ -13,5 +13,9 @@ with open('test_data/arctic_article.txt', 'r') as myfile:
 with open('test_data/regular_article.txt', 'r') as myfile:
 	regular_article = myfile.read().replace('\n', '')
 
-article_preprocessor = ArticlePreprocessor(arctic_article)
-print(article_preprocessor.tagged_article)
+article_preprocessor = ArticlePreprocessor(regular_article)
+tagged_words = article_preprocessor.tagged_article
+chunked_words = article_preprocessor.chuck_words(tagged_words)
+
+aa = ArticleAnalyzer(chunked_words)
+print(aa.classify())

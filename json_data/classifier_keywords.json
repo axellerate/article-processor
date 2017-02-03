@@ -12,7 +12,8 @@
     "ghgs",
     "environment",
     "polution",
-    "fossil fuels"
+    "fossil fuels",
+    "environmental protection"
   ],
   "polarKeywords": [
     "arctic",
@@ -23,9 +24,16 @@
     "glacier",
     "frozen",
     "snow",
-    "iceberg"
+    "iceberg",
+    "north pole",
+    "south pole",
+    "polar",
+    "polar region",
+    "melt",
+    "melting",
+    "frigid"
   ],
-  "forestKeywords": [],
+  "forestsKeywords": [],
   "oceansKeywords": [],
   "airKeywords": []
 }
